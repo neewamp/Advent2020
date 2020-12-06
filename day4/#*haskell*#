@@ -1,0 +1,248 @@
+The lambdas must flow.
+If I break, you can:
+  1. Restart:           M-x haskell-process-restart
+  2. Configure logging: C-h v haskell-process-log (useful for debugging)
+  3. General config:    M-x customize-mode
+  4. Hide these tips:   C-h v haskell-process-show-debug-tips
+λ> :t spliton
+splitAt :: Int -> [a] -> ([a], [a])
+λ> :t splitOn
+splitOn :: Eq a => [a] -> [a] -> [[a]]
+λ> :t group
+group :: [[Char]] -> [[Char]]
+λ> :t group
+group :: [[Char]] -> [[Char]]
+λ> :t isInfixOf
+isInfixOf :: Eq a => [a] -> [a] -> Bool
+λ> :d Monoid
+
+<no location info>: error: not an expression: ‘’
+λ> :help
+ Commands available from the prompt:
+
+   <statement>                 evaluate/run <statement>
+   :                           repeat last command
+   :{\n ..lines.. \n:}\n       multiline command
+   :add [*]<module> ...        add module(s) to the current target set
+   :browse[!] [[*]<mod>]       display the names defined by module <mod>
+                               (!: more details; *: all top-level names)
+   :cd <dir>                   change directory to <dir>
+   :cmd <expr>                 run the commands returned by <expr>::IO String
+   :complete <dom> [<rng>] <s> list completions for partial input string
+   :ctags[!] [<file>]          create tags file <file> for Vi (default: "tags")
+                               (!: use regex instead of line number)
+   :def <cmd> <expr>           define command :<cmd> (later defined command has
+                               precedence, ::<cmd> is always a builtin command)
+   :doc <name>                 display docs for the given name (experimental)
+   :edit <file>                edit file
+   :edit                       edit last module
+   :etags [<file>]             create tags file <file> for Emacs (default: "TAGS")
+   :help, :?                   display this list of commands
+   :info[!] [<name> ...]       display information about the given names
+                               (!: do not filter instances)
+   :issafe [<mod>]             display safe haskell information of module <mod>
+   :kind[!] <type>             show the kind of <type>
+                               (!: also print the normalised type)
+   :load[!] [*]<module> ...    load module(s) and their dependents
+                               (!: defer type errors)
+   :main [<arguments> ...]     run the main function with the given arguments
+   :module [+/-] [*]<mod> ...  set the context for expression evaluation
+   :quit                       exit GHCi
+   :reload[!]                  reload the current module set
+                               (!: defer type errors)
+   :run function [<arguments> ...] run the function with the given arguments
+   :script <file>              run the script <file>
+   :type <expr>                show the type of <expr>
+   :type +d <expr>             show the type of <expr>, defaulting type variables
+   :type +v <expr>             show the type of <expr>, with its specified tyvars
+   :unadd <module> ...         remove module(s) from the current target set
+   :undef <cmd>                undefine user-defined command :<cmd>
+   :!<command>                 run the shell command <command>
+
+ -- Commands for debugging:
+
+   :abandon                    at a breakpoint, abandon current computation
+   :back [<n>]                 go back in the history N steps (after :trace)
+   :break [<mod>] <l> [<col>]  set a breakpoint at the specified location
+   :break <name>               set a breakpoint on the specified function
+   :continue                   resume after a breakpoint
+   :delete <number>            delete the specified breakpoint
+   :delete *                   delete all breakpoints
+   :force <expr>               print <expr>, forcing unevaluated parts
+   :forward [<n>]              go forward in the history N step s(after :back)
+   :history [<n>]              after :trace, show the execution history
+   :list                       show the source code around current breakpoint
+   :list <identifier>          show the source code for <identifier>
+   :list [<module>] <line>     show the source code around line number <line>
+   :print [<name> ...]         show a value without forcing its computation
+   :sprint [<name> ...]        simplified version of :print
+   :step                       single-step after stopping at a breakpoint
+   :step <expr>                single-step into <expr>
+   :steplocal                  single-step within the current top-level binding
+   :stepmodule                 single-step restricted to the current module
+   :trace                      trace after stopping at a breakpoint
+   :trace <expr>               evaluate <expr> with tracing on (see :history)
+
+ -- Commands for changing settings:
+
+   :set <option> ...           set options
+   :seti <option> ...          set options for interactive evaluation only
+   :set args <arg> ...         set the arguments returned by System.getArgs
+   :set prog <progname>        set the value returned by System.getProgName
+   :set prompt <prompt>        set the prompt used in GHCi
+   :set prompt-cont <prompt>   set the continuation prompt used in GHCi
+   :set prompt-function <expr> set the function to handle the prompt
+   :set prompt-cont-function <expr>set the function to handle the continuation prompt
+   :set editor <cmd>           set the command used for :edit
+   :set stop [<n>] <cmd>       set the command to run when a breakpoint is hit
+   :unset <option> ...         unset options
+
+  Options for ':set' and ':unset':
+
+    +m            allow multiline commands
+    +r            revert top-level expressions after each evaluation
+    +s            print timing/memory stats after each evaluation
+    +t            print type after evaluation
+    +c            collect type/location info after loading modules
+    -<flags>      most GHC command line flags can also be set here
+                         (eg. -v2, -XFlexibleInstances, etc.)
+                    for GHCi-specific flags, see User's Guide,
+                    Flag reference, Interactive-mode options
+
+ -- Commands for displaying information:
+
+   :show bindings              show the current bindings made at the prompt
+   :show breaks                show the active breakpoints
+   :show context               show the breakpoint context
+   :show imports               show the current imports
+   :show linker                show current linker state
+   :show modules               show the currently loaded modules
+   :show packages              show the currently active package flags
+   :show paths                 show the currently active search paths
+   :show language              show the currently active language flags
+   :show targets               show the current set of targets
+   :show <setting>             show value of <setting>, which is one of
+                                  [args, prog, editor, stop]
+   :showi language             show language flags for interactive evaluation
+
+λ> :doc Monoid
+ The class of monoids (types with an associative binary operation that
+ has an identity).  Instances should satisfy the following:
+
+ [Right identity] @x '<>' 'mempty' = x@
+ [Left identity]  @'mempty' '<>' x = x@
+ [Associativity]  @x '<>' (y '<>' z) = (x '<>' y) '<>' z@ ('Semigroup' law)
+ [Concatenation]  @'mconcat' = 'foldr' ('<>') 'mempty'@
+
+ The method names refer to the monoid of lists under concatenation,
+ but there are many other instances.
+
+ Some types can be viewed as a monoid in more than one way,
+ e.g. both addition and multiplication on numbers.
+ In such cases we often define @newtype@s and make those instances
+ of 'Monoid', e.g. 'Data.Semigroup.Sum' and 'Data.Semigroup.Product'.
+
+ __NOTE__: 'Semigroup' is a superclass of 'Monoid' since /base-4.11.0.0/.
+λ> read "0001" ::Int
+*** Exception: Prelude.read: no parse
+λ> read "0001" ::Int
+1
+λ> readMaybe
+readMaybe :: Read a => String -> Maybe a
+λ> :t stripPrefix
+stripPrefix :: Eq a => [a] -> [a] -> Maybe [a]
+λ> valid2 "byr:1920"
+True
+λ> valid2 "byr:1920"
+True
+λ> valid2 "byr:1919"
+False
+λ> :t reverse
+reverse :: [a] -> [a]
+λ> readMaybe "1920"
+Nothing
+λ> valid2 "hgt:151cm"
+True
+λ> :t all
+all :: Foldable t => (a -> Bool) -> t a -> Bool
+λ> [0..9]
+[-9]
+λ> []
+[0,1,2,3,4,5,6,7,8,9]
+λ> ['a' .. 'b']
+"ab"
+λ> ['0' .. '9']
+"ab"
+λ> ['0' .. '9']
+"0123456789"
+λ> valid2 "hgt:151cm"
+*** Exception: /home/nathan/Play/Advent2020/day4/day4.hs:(63,1)-(73,22): Non-exhaustive patterns in function validHeight
+
+λ> valid2 "hgt:151cm"
+False
+λ> valid2 "hgt:59in"
+False
+λ> validHeight "59in"
+False
+λ> validHeight "59in"
+"59in"
+False
+λ> validHeight "59in"
+Nothing
+False
+λ> validHeight "59in"
+"ni95"
+False
+λ> validHeight "59in"
+False
+λ> :t (>>=)
+(>>=) :: Monad m => m a -> (a -> m b) -> m b
+λ> validHeight "59in"
+Nothing
+False
+λ> validHeight "59in"
+Just "59"
+False
+λ> validHeight "59in"
+False
+False
+λ> validHeight "59in"
+Just "59"
+False
+λ> validHeight "59in"
+Just (Just False)
+False
+λ> correctNum 59 76 "59"
+Just False
+λ> validHeight "59in"
+True
+λ> valid2 "hgt:151cm"
+True
+λ> valid2 "hcl:#0000az"
+True
+λ> valid2 "hcl:#0090az"
+False
+λ> valid2 "hcl:#00900az"
+False
+λ> valid2 "hcl:#0090af"
+False
+λ> valid2 "hcl:#0090af"
+True
+λ> valid2 "ecl:bfdsn"
+True
+λ> valid2 "ecl:bfdsn"
+False
+λ>  valid2 "pid:003049590"
+False
+λ>  valid2 "pid:003049590"
+True
+λ> 
+λ> solve2 ["ecl:gry pid:860033327 eyr:2020 hcl:#fffffd byr:1937 iyr:2017 cid:147 hgt:183cm"]
+1
+λ> solve2 ["ecl:gry pid:860033327 eyr:2020 hcl:#fffffd byr:1937 iyr:2017 cid:147 hgt:183cm", "iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884 hcl:#cfa07d byr:1929"]
+1
+λ> solve2 ["ecl:gry pid:860033327 eyr:2020 hcl:#fffffd byr:1937 iyr:2017 cid:147 hgt:183cm", "iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884 hcl:#cfa07d byr:1929", "hcl:#ae17e1 iyr:2013 eyr:2024ecl:brn pid:760753108 byr:1931 hgt:179cm"]
+
+
+1
+λ> solve2 ["ecl:gry pid:860033327 eyr:2020 hcl:#fffffd byr:1937 iyr:2017 cid:147 hgt:183cm", "iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884 hcl:#cfa07d byr:1929", "hcl:#ae17e1 iyr:2013 eyr:2024ecl:brn pid:760753108 byr:1931 hgt:179cm"]
