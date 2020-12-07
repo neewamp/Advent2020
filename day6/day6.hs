@@ -15,16 +15,12 @@ questions = enumFromTo 'a' 'z'
 -- Should make this a maybe and use foldM
 everyone :: [String] -> Int
 everyone dec =
-    length
-    (foldl (\acc elt -> acc `intersect` elt)
-               (head dec) (tail dec))
+    length $ foldl intersect (head dec) (tail dec)
 
 
 anyone :: [String] -> Int
 anyone dec =
-    length
-    (foldl (\acc elt -> acc `union` elt)
-               (head dec) (tail dec))
+    length $ foldl union (head dec) (tail dec)
 
 solve choice input =
     let l = fmap lines input in
